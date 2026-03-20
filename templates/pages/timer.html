@@ -1,7 +1,66 @@
 {{ define "title" }}Pomodoro Timer{{ end }}
 
 {{ define "content" }}
-<div>
-    <h1>Pomodoro Timer</h1>
-</div>
+<main class="relative min-h-screen w-full flex flex-col items-center justify-center px-6 py-12 selection:bg-black/10">
+
+    <!-- Header -->
+    <header class="absolute top-0 left-0 right-0 px-8 py-6 flex items-baseline justify-between">
+        <h3 class="text-2xl font-semibold tracking-tight font-[Fraunces]">Pomodoro</h3>
+        <p class="text-sm text-black/40 font-medium tracking-wide uppercase font-[Outfit]">Focus Session</p>
+    </header>
+
+    <!-- Timer Card -->
+    <div class="flex flex-col items-center justify-center gap-10">
+        <!-- Timer Display -->
+        <div class="relative">
+            <div class="absolute -inset-8 border border-black/6 rounded-3xl"></div>
+            <div class="relative px-16 py-14 flex flex-col items-center gap-8">
+                <h1 class="text-[7rem] leading-none font-bold tracking-tighter flex items-baseline justify-center" id="timer-display"
+                    data-duration-ms="1500000">
+                    <span class="inline-block w-[2ch] text-center tabular-nums font-[Fraunces]"
+                        id="timer-minutes">25</span>
+                    <span class="text-black/20 mx-3">:</span>
+                    <span class="inline-block w-[2ch] text-center tabular-nums font-[Fraunces]"
+                        id="timer-seconds">00</span>
+                    <span class="text-black/20 mx-3">:</span>
+                    <span
+                        class="inline-block w-[2ch] text-center text-[3.5rem] text-black/40 tabular-nums font-[Fraunces]"
+                        id="timer-centiseconds">00</span>
+                </h1>
+
+                <!-- Progress bar placeholder -->
+                <div class="w-full h-px bg-black/10 rounded-full overflow-hidden">
+                    <div class="h-full bg-black/60 rounded-full transition-all duration-100 ease-linear"
+                        id="timer-progress" style="width: 100%"></div>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex items-center gap-4">
+                    <button id="start-pause-btn"
+                        class="px-10 py-2.5 text-sm font-semibold uppercase tracking-widest bg-black text-[#ECEDDF] rounded-full hover:bg-black/80 active:scale-[0.97] transition-all duration-150 cursor-pointer font-[Outfit]">
+                        Start
+                    </button>
+                    <button id="reset-btn"
+                        class="px-6 py-2.5 text-sm font-semibold uppercase tracking-widest text-black/40 rounded-full hover:text-black/70 hover:bg-black/4 active:scale-[0.97] transition-all duration-150 cursor-pointer font-[Outfit]">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="absolute bottom-0 left-0 right-0 px-8 py-6 flex items-center justify-between">
+        <a href="https://github.com/Fozzyack"
+            class="text-xs text-black/30 font-medium hover:text-black/60 transition-colors duration-200 font-[Outfit]">
+            github.com/Fozzyack
+        </a>
+        <a href="mailto:fsundra@gmail.com"
+            class="text-xs text-black/30 font-medium hover:text-black/60 transition-colors duration-200 font-[Outfit]">
+            fsundra@gmail.com
+        </a>
+    </footer>
+
+</main>
+<script src="/assets/js/timer.js"></script>
 {{ end }}
