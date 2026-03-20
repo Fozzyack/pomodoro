@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const minutesEl = document.getElementById("timer-minutes");
   const secondsEl = document.getElementById("timer-seconds");
   const centisecondsEl = document.getElementById("timer-centiseconds");
+  const modeLabelEl = document.getElementById("timer-mode-label");
   const editor = document.getElementById("timer-editor");
   const minutesInput = document.getElementById("timer-minutes-input");
   const secondsInput = document.getElementById("timer-seconds-input");
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     !minutesEl ||
     !secondsEl ||
     !centisecondsEl ||
+    !modeLabelEl ||
     !editor ||
     !minutesInput ||
     !secondsInput ||
@@ -27,11 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const initialDurationMs = Number(display.dataset.durationMs || 1500000);
-  let configuredDurationMs = initialDurationMs;
-  let remainingMs = configuredDurationMs;
+  const cooldownDurationMs = 5 * 60 * 1000;
+  let workDurationMs = initialDurationMs;
+  let activeDurationMs = workDurationMs;
+  let remainingMs = activeDurationMs;
   let endTime = 0;
   let intervalId = null;
   let isEditing = false;
+  let isCooldown = false;
 
   const formatTwoDigits = (value) => String(value).padStart(2, "0");
   const isRunning = () => intervalId !== null;
@@ -73,8 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const applyInputDuration = () => {
-    configuredDurationMs = durationFromInputs();
-    remainingMs = configuredDurationMs;
+    workDurationMs = durationFromInputs();
+    activeDurationMs = workDurationMs;
+    isCooldown = false;
+    remainingMs = activeDurationMs;
+    modeLabelEl.textContent = "Timer";
     syncInputsFromDuration(remainingMs);
     render(remainingMs);
   };
@@ -109,12 +117,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (configuredDurationMs <= 0) {
+    if (activeDurationMs <= 0) {
       progressEl.style.width = "0%";
       return;
     }
 
-    const pct = (Math.max(0, timeMs) / configuredDurationMs) * 100;
+    const pct = (Math.max(0, timeMs) / activeDurationMs) * 100;
     progressEl.style.width = `${Math.max(0, Math.min(100, pct))}%`;
   };
 
@@ -146,12 +154,28 @@ document.addEventListener("DOMContentLoaded", () => {
     render(remainingMs);
 
     if (remainingMs <= 0) {
+      if (!isCooldown) {
+        isCooldown = true;
+        modeLabelEl.textContent = "Cooldown";
+        activeDurationMs = cooldownDurationMs;
+        remainingMs = activeDurationMs;
+        render(remainingMs);
+        endTime = performance.now() + remainingMs;
+        return;
+      }
+
       stop();
+      isCooldown = false;
+      modeLabelEl.textContent = "Timer";
+      activeDurationMs = workDurationMs;
+      remainingMs = activeDurationMs;
+      render(remainingMs);
     }
   };
 
   const start = () => {
     exitEditMode();
+    activeDurationMs = remainingMs;
     endTime = performance.now() + remainingMs;
     intervalId = setInterval(tick, 10);
     startPauseBtn.textContent = "Pause";
@@ -188,8 +212,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   resetBtn.addEventListener("click", () => {
     stop();
-    configuredDurationMs = initialDurationMs;
-    remainingMs = configuredDurationMs;
+    isCooldown = false;
+    modeLabelEl.textContent = "Timer";
+    workDurationMs = initialDurationMs;
+    activeDurationMs = workDurationMs;
+    remainingMs = activeDurationMs;
     syncInputsFromDuration(remainingMs);
     render(remainingMs);
   });
