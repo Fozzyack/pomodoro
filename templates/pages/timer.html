@@ -30,14 +30,14 @@
 
                 <div id="timer-editor"
                     class="hidden items-baseline justify-center text-[7rem] leading-none font-bold tracking-tighter">
-                    <input id="timer-minutes-input" type="number" min="0" max="999" value="25"
-                        class="w-[2ch] text-center tabular-nums font-[Fraunces] bg-transparent border-0 outline-none appearance-none [-moz-appearance:textfield]" />
+                    <input id="timer-minutes-input" type="text" inputmode="numeric" maxlength="3" value="25"
+                        class="w-[2ch] m-0 p-0 text-center leading-none tabular-nums font-[Fraunces] bg-transparent border-0 outline-none" />
                     <span class="text-black/20 mx-3">:</span>
-                    <input id="timer-seconds-input" type="number" min="0" max="59" value="00"
-                        class="w-[2ch] text-center tabular-nums font-[Fraunces] bg-transparent border-0 outline-none appearance-none [-moz-appearance:textfield]" />
+                    <input id="timer-seconds-input" type="text" inputmode="numeric" maxlength="2" value="00"
+                        class="w-[2ch] m-0 p-0 text-center leading-none tabular-nums font-[Fraunces] bg-transparent border-0 outline-none" />
                     <span class="text-black/20 mx-3">:</span>
-                    <input id="timer-centiseconds-input" type="number" min="0" max="99" value="00"
-                        class="w-[2ch] text-center text-[3.5rem] text-black/40 tabular-nums font-[Fraunces] bg-transparent border-0 outline-none appearance-none [-moz-appearance:textfield]" />
+                    <input id="timer-centiseconds-input" type="text" inputmode="numeric" maxlength="2" value="00"
+                        class="w-[2ch] m-0 p-0 text-center leading-none text-[3.5rem] text-black/40 tabular-nums font-[Fraunces] bg-transparent border-0 outline-none" />
                 </div>
 
                 <!-- Progress bar placeholder -->
