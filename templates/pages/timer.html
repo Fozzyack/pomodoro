@@ -15,7 +15,7 @@
         <div class="relative">
             <div class="absolute -inset-8 border border-black/6 rounded-3xl"></div>
             <div class="relative px-16 py-14 flex flex-col items-center gap-8">
-                <h1 class="text-[7rem] leading-none font-bold tracking-tighter flex items-baseline justify-center" id="timer-display"
+                <h1 class="text-[7rem] leading-none font-bold tracking-tighter flex items-baseline justify-center cursor-text" id="timer-display"
                     data-duration-ms="1500000">
                     <span class="inline-block w-[2ch] text-center tabular-nums font-[Fraunces]"
                         id="timer-minutes">25</span>
@@ -27,6 +27,18 @@
                         class="inline-block w-[2ch] text-center text-[3.5rem] text-black/40 tabular-nums font-[Fraunces]"
                         id="timer-centiseconds">00</span>
                 </h1>
+
+                <div id="timer-editor"
+                    class="hidden items-baseline justify-center text-[7rem] leading-none font-bold tracking-tighter">
+                    <input id="timer-minutes-input" type="number" min="0" max="999" value="25"
+                        class="w-[2ch] text-center tabular-nums font-[Fraunces] bg-transparent border-0 outline-none appearance-none [-moz-appearance:textfield]" />
+                    <span class="text-black/20 mx-3">:</span>
+                    <input id="timer-seconds-input" type="number" min="0" max="59" value="00"
+                        class="w-[2ch] text-center tabular-nums font-[Fraunces] bg-transparent border-0 outline-none appearance-none [-moz-appearance:textfield]" />
+                    <span class="text-black/20 mx-3">:</span>
+                    <input id="timer-centiseconds-input" type="number" min="0" max="99" value="00"
+                        class="w-[2ch] text-center text-[3.5rem] text-black/40 tabular-nums font-[Fraunces] bg-transparent border-0 outline-none appearance-none [-moz-appearance:textfield]" />
+                </div>
 
                 <!-- Progress bar placeholder -->
                 <div class="w-full h-px bg-black/10 rounded-full overflow-hidden">
