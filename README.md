@@ -1,52 +1,65 @@
 # Pomodoro Timer
 
-![Pomodoro Timer cover](./screenshot.png)
+![Pomodoro Timer screenshot](./screenshot.png)
 
-A minimal web-based Pomodoro timer built with Go, Chi, plain JavaScript, and Tailwind CSS.
+A small web-based Pomodoro timer built with Go, Chi, vanilla JavaScript, and Tailwind CSS. It serves a single focused timer page with editable durations, pause/reset controls, and an automatic cooldown period after each work session.
 
 ## Features
 
-- Clean timer UI with centisecond precision
+- 25-minute default Pomodoro session
 - Start, pause, and reset controls
-- Click-to-edit timer values (minutes, seconds, centiseconds)
-- Automatic 5-minute cooldown after a work session completes
-- Mode label that switches between `Timer` and `Cooldown`
-- Health endpoint at `/health`
+- Click-to-edit minutes, seconds, and centiseconds
+- Automatic 5-minute cooldown after a completed work session
+- Live progress bar tied to the active session
+- Health check endpoint at `/health`
 
-## Tech Stack
+## Stack
 
-- Go (`net/http`)
-- [Chi Router](https://github.com/go-chi/chi)
+- Go
+- Chi router
+- Zerolog
 - Vanilla JavaScript
 - Tailwind CSS v4
+- Bun for frontend package management
 
-## Run Locally
+## Getting Started
 
-1. Install dependencies:
+### Prerequisites
+
+- Go 1.26+
+- Bun
+
+### Install dependencies
 
 ```bash
 bun install
 ```
 
-2. Build CSS (if you update styles):
+### Build the CSS
 
 ```bash
 bunx @tailwindcss/cli -i ./assets/css/style.css -o ./assets/css/output.css
 ```
 
-3. Start the server:
+### Run the app
 
 ```bash
 go run .
 ```
 
-4. Open `http://localhost:8080`
+Open `http://localhost:8080` in your browser.
 
-You can also choose a custom port:
+To use a different port:
 
 ```bash
 go run . -port 3000
 ```
+
+## Routes
+
+- `/` - timer page
+- `/health` - JSON health check
+- `/assets/*` - static CSS and JavaScript
 
 ## Project Structure
 
@@ -54,11 +67,25 @@ go run . -port 3000
 .
 ├── assets/
 │   ├── css/
+│   │   ├── style.css
+│   │   └── output.css
 │   └── js/
+│       └── timer.js
 ├── internal/
 │   ├── api/
 │   ├── app/
 │   └── routes/
 ├── templates/
-└── main.go
+│   ├── index.html
+│   └── pages/
+│       └── timer.html
+├── main.go
+├── go.mod
+└── package.json
 ```
+
+## Notes
+
+- The timer runs fully in the browser once the page has loaded.
+- Editing is disabled while the timer is actively running.
+- Reset returns the timer to the original page duration.
